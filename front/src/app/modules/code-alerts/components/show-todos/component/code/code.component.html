@@ -1,0 +1,5 @@
+<div class="code-container"
+    *ngIf="this.code!==''">
+    <!--Do not add indentation or break up line 4. <pre> tag will put that inside of the code as well-->
+    <pre><code [appHighlightCode]="code" class="language-javascript">{{this.code}}</code></pre>
+</div>
