@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TodosCommunicationService } from 'src/app/modules/code-alerts/services/todos-communication.service';
+import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
 
 @Component({
   selector: 'app-code',
@@ -11,7 +11,7 @@ export class CodeComponent {
   subs: Subscription[] = []
   code: string = ''
   constructor(
-    private communicationService: TodosCommunicationService,
+    private communicationService: TableCommunicationService,
   ) 
   {}
 

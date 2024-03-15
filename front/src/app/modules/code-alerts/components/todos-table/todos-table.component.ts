@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TodosCommunicationService } from 'src/app/modules/code-alerts/services/todos-communication.service';
-import { Todo } from '../../../../models/todo'; 
+import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
+import { Todo } from '../../models/todo'; 
 import { PaginationConstants } from 'src/app/modules/code-alerts/constants/pagination-constants';
-import { CommentTableService } from 'src/app/modules/code-alerts/services/comment-table.service';
+import { TableService } from 'src/app/modules/code-alerts/services/table.service';
 
 @Component({
   selector: 'app-todos-table',
@@ -11,15 +11,11 @@ import { CommentTableService } from 'src/app/modules/code-alerts/services/commen
   styleUrls: ['./todos-table.component.css']
 })
 export class TodosTableComponent {
-  SampleItemsList: Todo[] = [ 
-    { numOfLines: 5, status: "AWAIT", text: "//AWAIT additional directives regarding healing people\nlet heal=0\nheal=5", meta: "awaiting healing" },
-    { numOfLines: 5, status: "AWAIT", text: "//AWAIT additional directives regarding code completions, reactive forms etc.\nhello=\"helloworld\"", meta: "awaiting directives" },
-    { numOfLines: 5, status: "AWAIT", text: "//AWAIT additional directives regarding holding people\nlet hold=0\nhold=5", meta: "awaiting holding" }
-  ];
+  SampleItemsList: Todo[] = [];
   filteredItemList: Todo[] = [];
   subs: Subscription[] = [];
   pageSize= PaginationConstants.pageSize;
-  displayedColumns: string[] = ['numOfLines', 'status', 'meta'];
+  displayedColumns: string[] = ['filePath', 'status', 'meta'];
 
   onRowClicked(row: any) {
     this.selectedCode = row.text;
@@ -34,15 +30,15 @@ export class TodosTableComponent {
   }
 
   constructor(
-    private communicationService: TodosCommunicationService,
-    private commentTableService: CommentTableService
+    private communicationService: TableCommunicationService,
+    private TableService: TableService
   ) 
   {
     this.filteredItemList = [...this.SampleItemsList];
   }
 
   establishConnection() {
-    this.subs.push(this.commentTableService.getComments().subscribe((comments) => {
+    this.subs.push(this.TableService.getComments().subscribe((comments) => {
       this.SampleItemsList = comments;
       this.filteredItemList = comments;
     }));
@@ -64,9 +60,6 @@ export class TodosTableComponent {
     const filterValueLower = (target as HTMLInputElement).value.toLowerCase();
     if (filterBy === 'status') {
       this.filteredItemList = this.SampleItemsList.filter(item => item.status.toLowerCase().includes(filterValueLower));
-    } else if (filterBy === 'numOfLines') {
-      const num = parseInt((target as HTMLInputElement).value, 10);
-      this.filteredItemList = this.SampleItemsList.filter(item => item.numOfLines >= num);
     }
   }
 }

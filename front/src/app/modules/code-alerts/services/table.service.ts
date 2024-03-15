@@ -6,11 +6,15 @@ import { Todo } from '../models/todo';
 @Injectable({
   providedIn: 'root'
 })
-export class CommentTableService {
+export class TableService {
 
   constructor(private http: HttpClient) { }
 
   getComments(): Observable<Todo[]> {
     return this.http.get<Todo[]>('http://localhost:3000/comments');
   }
+  getFileList(): Observable<string[]> {
+    return this.http.get<string[]>('http://localhost:3000/fileList');
+  }
 }
+ 

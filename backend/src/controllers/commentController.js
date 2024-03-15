@@ -33,4 +33,26 @@ async function getCodeComments(req, res) {
   }
 }
 
-module.exports = { getCodeComments };
+async function getFileList(req, res){
+  try {
+    const filePath = 'src/resources/report.csv'; // Ensure the file path and extension are correct
+    const resultsSet = new Set(); // To store unique filenames
+
+    fs.createReadStream(filePath)
+      .pipe(csvParser())
+      .on('data', (row) => {
+        resultsSet.add(row.File); // Adds to the Set, duplicates are ignored
+      })
+      .on('end', () => {
+        console.log('List of files successfully processed');
+        const uniqueResults = [...resultsSet]; // Convert the Set back to an array
+        res.send(uniqueResults); // Send the unique files
+      });
+  }
+  catch (error) {
+    console.error('Error reading file:', error);
+    res.status(500).send('Error reading file');
+  }
+}
+
+module.exports = { getCodeComments, getFileList };
