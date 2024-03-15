@@ -5,13 +5,11 @@ import { CodeAlertsMainComponent } from './components/code-alerts-main/code-aler
 import { MaterialModule } from 'src/assets/material/material.module';
 import { CodeComponent } from './components/show-todos/component/code/code.component';
 import { TodosTableComponent } from './components/show-todos/component/todos-table/todos-table.component';
-import { TodosComponent } from './components/show-todos/todos.component';
 import { HighlightCodeDirective } from './directives/highlight-code.directive';
 
 
 @NgModule({
   declarations: [
-    TodosComponent,
     CodeAlertsMainComponent,
     TodosTableComponent,
     CodeComponent,
@@ -21,6 +19,8 @@ import { HighlightCodeDirective } from './directives/highlight-code.directive';
     CommonModule,
     CodeAlertsRoutingModule,
     MaterialModule,
-  ]
+  ],
+  providers: [
+  ],
 })
 export class CodeAlertsModule { }

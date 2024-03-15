@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { TodosCommunicationService } from 'src/app/modules/code-alerts/services/todos-communication.service';
 import { Todo } from '../../../../models/todo'; 
 import { PaginationConstants } from 'src/app/modules/code-alerts/constants/pagination-constants';
+import { CommentTableService } from 'src/app/modules/code-alerts/services/comment-table.service';
+
 @Component({
   selector: 'app-todos-table',
   templateUrl: './todos-table.component.html',
@@ -22,14 +24,29 @@ export class TodosTableComponent {
   onRowClicked(row: any) {
     this.selectedCode = row.text;
   }
+
+  ngOnInit() {
+    this.establishConnection();
+  }
   
+  ngOnDestroy() {
+    this.subs.forEach(item => item.unsubscribe())
+  }
+
   constructor(
     private communicationService: TodosCommunicationService,
+    private commentTableService: CommentTableService
   ) 
   {
     this.filteredItemList = [...this.SampleItemsList];
   }
 
+  establishConnection() {
+    this.subs.push(this.commentTableService.getComments().subscribe((comments) => {
+      this.SampleItemsList = comments;
+      this.filteredItemList = comments;
+    }));
+  }
   set selectedCode(value: string) {
     this.communicationService.selectedCode$.next(value);
   }
@@ -52,8 +69,4 @@ export class TodosTableComponent {
       this.filteredItemList = this.SampleItemsList.filter(item => item.numOfLines >= num);
     }
   }
-  ngOnDestroy() {
-    this.subs.forEach(item => item.unsubscribe())
-  }
-
 }
