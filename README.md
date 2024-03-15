@@ -1,17 +1,33 @@
-This is a project that will help me develop and keep track of code comments I've written that contain AWAIT/TODO. Currently it's only TODOs but still
-Was tired of going around files or using ctrl+shift+f so this is the next best thing.
+### Getting Started
 
-to start this project ya gotta do these things:
+This project helps me to develop and keep track of code comments containing `AWAIT`/`TODO`. Follow the steps below to set up the project on your system.
 
-In ./backend folder run: 
+#### Backend Setup
+
+Navigate to the `./backend` folder and run the following commands:
+
+```bash
 $ npm install
 $ node index.js
+```
 
-In ./front folder run:
+#### Frontend Setup
+
+Navigate to the `./front` folder and run the following commands:
+
+```bash
 $ npm install
-$ ng serve -o if you have angular. consult angular documentation and installation if not.
+$ ng serve -o
+```
 
-in ./scripts folder:
-edit file_list by adding files you wanna track on your system.
-run initialize_awaits.bat by executing it. Make sure you've got all required python packages installed
+If you do not have Angular installed, consult the [Angular documentation](https://angular.io/guide/setup-local) for installation instructions.
 
+#### Script Setup
+
+1. Navigate to the `./scripts` folder.
+2. Edit `file_list` by adding the files you want to track on your system.
+3. Run `initialize_awaits.bat` by executing it. Ensure you have all the required Python packages installed.
+
+---
+
+This format uses Markdown code blocks for commands, making them stand out for easier copying and pasting. Including links to relevant documentation (like Angular's setup guide) can also help users who may not have the necessary tools installed.
