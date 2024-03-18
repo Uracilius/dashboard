@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatRippleModule } from '@angular/material/core';
 @NgModule({
   imports: [
     MatButtonModule,
@@ -17,7 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatSnackBarModule,
     MatPaginatorModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatRippleModule
   ],
   exports: [
     MatButtonModule,
@@ -29,7 +31,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatRippleModule
   ]
 })
 export class MaterialModule {}
