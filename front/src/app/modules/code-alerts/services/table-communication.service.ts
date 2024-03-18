@@ -5,9 +5,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class TableCommunicationService {
-  selectedCode$: BehaviorSubject<string> = new BehaviorSubject<string>('')
-  selectedFileList$: BehaviorSubject<string> = new BehaviorSubject<string>('')
-  
-  fileNameFilter$: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  selectedComment$ = new BehaviorSubject<string>('');
+  selectedFileList$ = new BehaviorSubject<string>('');
+  fileNameFilter$ = new BehaviorSubject<string>('');
+
   constructor() { }
 }

@@ -16,6 +16,7 @@ export class FileListComponent {
   fileDisplayList: string [] = [];
   fileList: string[] = [];
   fileNameFilter: string = '';
+  selectedRowIndex: number | null = null;
   constructor(
     private communicationService: TableCommunicationService,
     private TableService: TableService,
@@ -32,16 +33,17 @@ export class FileListComponent {
   }
 
   rowClick(index: number){
+    this.selectedRowIndex = index;
     this.communicationService.selectedFileList$.next(this.fileList[index]);
   }
-
+  //TODO: Check for better implementation instead of using rowClick to display first.
   populateList() {
     this.subs.push(this.TableService.getFileList(this.currentPage, this.pageSize).subscribe({
       next: (res) => {
         this.fileList = res.data; 
         this.pathNameGeneratorService.processPaths(res.data);
-
         this.fileDisplayList = this.pathNameGeneratorService.generateDynamicDisplayPaths(res.data);
+        this.rowClick(0); //Simulation of rowClick in case of singular files to make it look bearable 
       }
     }));
   }

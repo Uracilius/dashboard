@@ -1,3 +1,17 @@
-.code-container{
-    overflow:auto;
+.code{
+    height: 100%;
+    width: 100%;
+}
+
+.code-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    height: 100%; /* Fill the height of its parent, ensure the parent has a defined height */
+    justify-content: center;
+}
+
+.align{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

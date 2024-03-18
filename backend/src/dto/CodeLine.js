@@ -1,8 +1,7 @@
 const CodeLineDTO = {
-  filePath: '',
   id: 0,
+  filePath: '',
   status: '',
-  text: '',
   meta: ''
 };
 

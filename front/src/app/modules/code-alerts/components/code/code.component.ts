@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
 import { TableService } from '../../services/table.service';
+import { UserFeedbackConstants } from '../../constants/user-feedback-constants';
 
 @Component({
   selector: 'app-code',
@@ -11,8 +12,10 @@ import { TableService } from '../../services/table.service';
 export class CodeComponent {
   subs: Subscription[] = []
   code: string = ''
+  defaultCodeMessage = UserFeedbackConstants.noCodeSelected
   constructor(
-    private communicationService: TableCommunicationService
+    private tableCommunicationService: TableCommunicationService,
+    private tableService: TableService
   ) 
   {}
 
@@ -22,12 +25,23 @@ export class CodeComponent {
 
   initSubscribe() {
     this.subs.push(
-      this.communicationService.selectedCode$.subscribe({
+      this.tableCommunicationService.selectedComment$.pipe(
+      filter(comment => comment.trim() !== '') // Only emit non-empty comments
+      ).subscribe({
         next: (res) => {
-          this.code = res
+          this.getCode(res)
         }
       })
     )
   }
 
+  getCode(filePath: string) {
+    this.subs.push(
+      this.tableService.getCode(filePath).subscribe({
+        next: (res) => {
+          this.code=res.text.replace(/\\n/g, '\n');;
+        }
+      })
+    )
+  }
 }

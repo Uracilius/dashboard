@@ -16,7 +16,7 @@ export class PathNameGeneratorService {
   generateDynamicDisplayPaths(paths: string[]): string[] {
     return paths.map(path => {
         const splitPath = path.split(this.separator);
-        const uniquePrefix = this.trie.findShortestUniquePrefix(splitPath);
+        const uniquePrefix = this.trie.findShortestUniquePrefix(splitPath)
         return uniquePrefix.join(this.separator);
     });
   }

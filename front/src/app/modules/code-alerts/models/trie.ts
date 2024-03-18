@@ -4,7 +4,7 @@ export class TrieNode {
 }
 
 export class Trie {
-    private root: TrieNode = new TrieNode();
+    public root: TrieNode = new TrieNode();
 
     insert(path: string[]): void {
         let node = this.root;

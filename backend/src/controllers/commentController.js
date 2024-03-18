@@ -5,24 +5,22 @@ const CodeLineDTO = require("../dto/CodeLine");
 async function getCodeCommentsByFilePath(req, res) {
   let results = []; 
   const filePath = 'src/resources/report.csv'; 
-    
+  
   const page = parseInt(req.body.page, 10) || 1;
   const pageSize = parseInt(req.body.pageSize, 10) || 10;
   try {
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on('data', (row) => {
-        if (row.File == req.body.filePath) {
+        if (row.FilePath == req.body.filePath) {
           const dto = {
             ...CodeLineDTO,
-            id: parseInt(row['Comment ID'], 10),
-            filePath: row.File,
+            id: row.ID,
+            filePath: row.FilePath,
             status: row.Status,
-            text: row.Text.replace(/\\n/g, '\n'),
             meta: row.Meta
           };
           results.push(dto);
-          console.log(row.File, row.Status, row.Text, row.Meta)
         }
       })
       .on('end', () => {
@@ -41,6 +39,32 @@ async function getCodeCommentsByFilePath(req, res) {
   }
 }
 
+async function getCode(req, res) {
+    const filePath = 'src/resources/report.csv';
+    const requestedFilePath = req.body.id;
+
+    let found = false;
+
+    const stream = fs.createReadStream(filePath).pipe(csvParser());
+
+    stream.on('data', (row) => {
+        if (row.ID === requestedFilePath) {
+            found = true;
+            // Wrap the text in a JSON object before sending
+            res.json({ text: row.Code });
+            stream.destroy(); // Ensure to end the stream early
+        }
+    })
+    .on('end', () => {
+        if (!found) {
+            res.status(404).json({ error: 'No matching file path found in the CSV.' });
+        }
+    })
+    .on('error', (error) => {
+        console.error('Error reading file:', error);
+        res.status(500).json({ error: 'Error reading file' });
+    });
+}
 
 async function getFileList(req, res){
   try {
@@ -53,10 +77,9 @@ async function getFileList(req, res){
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on('data', (row) => {
-        resultsSet.add(row.File); 
+        resultsSet.add(row.FilePath); 
       })
       .on('end', () => {
-        console.log('List of files successfully processed');
         const uniqueResults = [...resultsSet]; 
 
         const startIndex = (page - 1) * pageSize;
@@ -78,4 +101,4 @@ async function getFileList(req, res){
   }
 }
 
-module.exports = { getCodeCommentsByFilePath, getFileList };
+module.exports = { getCodeCommentsByFilePath, getFileList, getCode };
