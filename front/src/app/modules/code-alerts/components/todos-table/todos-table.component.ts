@@ -17,8 +17,11 @@ export class TodosTableComponent {
   pageSize= PaginationConstants.pageSize;
   displayedColumns: string[] = ['filePath', 'status', 'meta'];
   selectedFile = '';
+  selectedRowIndex: number = -1; // Initial value indicating no row is selected
+
   
-  onRowClicked(row: any) {
+  onRowClicked(row: any,  index: number) {
+    this.selectedRowIndex = index;
     this.selectedComment = row.id;
   }
 

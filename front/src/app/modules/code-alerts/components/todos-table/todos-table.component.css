@@ -1,3 +1,11 @@
 .container-50{
     overflow:auto;
 }
+.selected {
+    border-color: black; /* Adjust the color as needed */
+    border-width: 2px;
+  }
+  .mat-mdc-table .mat-mdc-row:hover, .mat-mdc-table .mat-mdc-footer-row:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important; /* Example: Light grey */
+  }
+  
