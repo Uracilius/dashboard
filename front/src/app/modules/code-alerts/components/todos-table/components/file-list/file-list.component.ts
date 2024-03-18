@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PathNameGeneratorService } from 'src/app/modules/code-alerts/services/path-name-generator.service';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
 import { TableService } from 'src/app/modules/code-alerts/services/table.service';
 
@@ -9,12 +10,16 @@ import { TableService } from 'src/app/modules/code-alerts/services/table.service
   styleUrls: ['./file-list.component.css']
 })
 export class FileListComponent {
+  currentPage: number = 1;
+  pageSize: number = 5;
   subs: Subscription[] = [];
+  fileDisplayList: string [] = [];
   fileList: string[] = [];
   fileNameFilter: string = '';
   constructor(
     private communicationService: TableCommunicationService,
-    private TableService: TableService
+    private TableService: TableService,
+    private pathNameGeneratorService: PathNameGeneratorService
   ) { }
 
   ngOnInit() {
@@ -27,15 +32,28 @@ export class FileListComponent {
   }
 
   rowClick(index: number){
-    console.log('row clicked', this.fileList[index]);
+    this.communicationService.selectedFileList$.next(this.fileList[index]);
   }
 
   populateList() {
-    this.subs.push(this.TableService.getFileList().subscribe({
+    this.subs.push(this.TableService.getFileList(this.currentPage, this.pageSize).subscribe({
       next: (res) => {
-        this.fileList = res;
+        this.fileList = res.data; 
+        this.pathNameGeneratorService.processPaths(res.data);
+
+        this.fileDisplayList = this.pathNameGeneratorService.generateDynamicDisplayPaths(res.data);
       }
     }));
+  }
+
+  nextPage() {
+    this.currentPage++;
+    this.populateList();
+  }
+
+  previousPage() {
+    this.currentPage = Math.max(1, this.currentPage - 1);
+    this.populateList();
   }
 
   initSubscribe() {

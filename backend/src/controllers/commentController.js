@@ -2,30 +2,38 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const CodeLineDTO = require("../dto/CodeLine");
 
-async function getCodeComments(req, res) {
+async function getCodeCommentsByFilePath(req, res) {
+  let results = []; 
+  const filePath = 'src/resources/report.csv'; 
+    
+  const page = parseInt(req.body.page, 10) || 1;
+  const pageSize = parseInt(req.body.pageSize, 10) || 10;
   try {
-    const filePath = 'src/resources/report.csv'; // Ensure the file path and extension are correct
-    const results = []; // To store instances of CodeLineDTO
-
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on('data', (row) => {
-        const dto = { ...CodeLineDTO, ...row };
-        dto.id = parseInt(dto['Comment ID'], 10); 
-        dto.filePath = dto.File;
-        dto.status = dto.Status;
-        dto.text = dto.Text.replace(/\\n/g, '\n');
-        dto.meta = dto.Meta;
-        delete dto.File; // Remove CSV specific fields not needed in DTO
-        delete dto['Comment ID'];
-        delete dto.Status;
-        delete dto.Text;
-        delete dto.Meta;
-        results.push(dto);
+        if (row.File == req.body.filePath) {
+          const dto = {
+            ...CodeLineDTO,
+            id: parseInt(row['Comment ID'], 10),
+            filePath: row.File,
+            status: row.Status,
+            text: row.Text.replace(/\\n/g, '\n'),
+            meta: row.Meta
+          };
+          results.push(dto);
+          console.log(row.File, row.Status, row.Text, row.Meta)
+        }
       })
       .on('end', () => {
-        console.log('CSV file successfully processed');
-        res.send(results); 
+        const startIndex = (page - 1) * pageSize;
+        const paginatedResults = results.slice(startIndex, startIndex + pageSize);
+        res.json({
+          page,
+          pageSize,
+          totalCount: results.length,
+          data: paginatedResults,
+        });
       });
   } catch (error) {
     console.error('Error reading file:', error);
@@ -33,20 +41,35 @@ async function getCodeComments(req, res) {
   }
 }
 
+
 async function getFileList(req, res){
   try {
     const filePath = 'src/resources/report.csv'; // Ensure the file path and extension are correct
     const resultsSet = new Set(); // To store unique filenames
 
+    const page = parseInt(req.body.page, 10) || 1;
+    const pageSize = parseInt(req.body.pageSize, 10) || 10;
+
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on('data', (row) => {
-        resultsSet.add(row.File); // Adds to the Set, duplicates are ignored
+        resultsSet.add(row.File); 
       })
       .on('end', () => {
         console.log('List of files successfully processed');
-        const uniqueResults = [...resultsSet]; // Convert the Set back to an array
-        res.send(uniqueResults); // Send the unique files
+        const uniqueResults = [...resultsSet]; 
+
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const paginatedResults = uniqueResults.slice(startIndex, endIndex);
+
+        res.json({
+          currentPage: page,
+          pageSize: pageSize,
+          totalCount: uniqueResults.length,
+          totalPages: Math.ceil(uniqueResults.length / pageSize),
+          data: paginatedResults,
+        });
       });
   }
   catch (error) {
@@ -55,4 +78,4 @@ async function getFileList(req, res){
   }
 }
 
-module.exports = { getCodeComments, getFileList };
+module.exports = { getCodeCommentsByFilePath, getFileList };

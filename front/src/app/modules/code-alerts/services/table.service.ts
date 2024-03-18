@@ -10,11 +10,12 @@ export class TableService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(): Observable<Todo[]> {
-    return this.http.get<Todo[]>('http://localhost:3000/comments');
+  getComments(page: number = 1, pageSize: number = 10, filePath: string): Observable<any> {
+    return this.http.post<any>(`http://localhost:3000/comments`, { page, pageSize, filePath });
   }
-  getFileList(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:3000/fileList');
+  
+  getFileList(page: number, pageSize: number = 10): Observable<any> { // Adjust the return type based on your actual data structure
+    return this.http.post<any>(`http://localhost:3000/fileList`, { page, pageSize });
   }
 }
  

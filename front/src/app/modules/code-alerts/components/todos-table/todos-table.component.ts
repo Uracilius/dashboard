@@ -16,13 +16,13 @@ export class TodosTableComponent {
   subs: Subscription[] = [];
   pageSize= PaginationConstants.pageSize;
   displayedColumns: string[] = ['filePath', 'status', 'meta'];
-
+  selectedFile = '';
   onRowClicked(row: any) {
     this.selectedCode = row.text;
   }
 
   ngOnInit() {
-    this.establishConnection();
+    this.initSubscribe();
   }
   
   ngOnDestroy() {
@@ -38,17 +38,32 @@ export class TodosTableComponent {
   }
 
   establishConnection() {
-    this.subs.push(this.TableService.getComments().subscribe((comments) => {
-      this.SampleItemsList = comments;
-      this.filteredItemList = comments;
+    console.log('Attempting to establish connection with:', this.selectedFile);
+    this.subs.push(this.TableService.getComments(1, 5, this.selectedFile).subscribe((comments) => {
+      console.log('Received comments:', comments);
+      this.SampleItemsList = comments.data;
+      this.filteredItemList = comments.data;
+    }, error => {
+      console.error('Error fetching comments:', error);
     }));
   }
+
   set selectedCode(value: string) {
     this.communicationService.selectedCode$.next(value);
   }
   
   get paginatedItems() {
     return this.SampleItemsList.slice(PaginationConstants.startIndex, PaginationConstants.endIndex);
+  }
+
+  initSubscribe() {
+    this.subs.push(this.communicationService.selectedFileList$.subscribe({
+      next: (res) => {
+        this.selectedFile = res
+        console.log('SELECTED FILE CHANGED TO', this.selectedFile)
+        this.establishConnection();
+      }
+    }));
   }
 
   onPageChange(event: any) {

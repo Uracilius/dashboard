@@ -7,11 +7,11 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors({ origin: 'http://localhost:4200' }));
 
-const { getCodeComments, getFileList } = require('./src/controllers/commentController');
+const { getFileList, getCodeCommentsByFilePath } = require('./src/controllers/commentController');
 
 
-app.get('/comments', getCodeComments);
-app.get('/fileList', getFileList);
+app.post('/comments', getCodeCommentsByFilePath);
+app.post('/fileList', getFileList);
 
 
 app.listen(port, () => {

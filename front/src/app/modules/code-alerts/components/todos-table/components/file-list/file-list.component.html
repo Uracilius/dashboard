@@ -1,7 +1,10 @@
-<div class="my-4">
-    <div class="list-group">
-    <a class="list-group-item list-group-item-action" *ngFor="let file of fileList; let i = index" (click)="rowClick(i)">{{ file }}</a>
-    
+<div class="my-4 item-container">
+    <div 
+        *ngFor="let file of fileDisplayList; let i = index" 
+        (click)="rowClick(i)" 
+        class="item">
+        {{ file }}
     </div>
+    <i class="bi bi-caret-left-fill item" (click)="previousPage()"></i>
+    <i class="bi bi-caret-right-fill item" (click)="nextPage()"></i>
 </div>
-  

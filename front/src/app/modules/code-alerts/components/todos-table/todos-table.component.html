@@ -1,17 +1,7 @@
 <div class="container">
   <app-file-list></app-file-list>
 </div>
-<div class="container">
-  <mat-form-field appearance="fill">
-    <mat-label>Status</mat-label>
-    <input matInput (input)="applyFilter($event.target, 'status')" placeholder="Filter by status">
-  </mat-form-field>
-  
-  <mat-form-field appearance="fill">
-    <mat-label>Minimum No. of Lines</mat-label>
-    <input matInput (input)="applyFilter($event.target, 'numOfLines')" type="number" placeholder="Minimum no. of lines">
-  </mat-form-field>
-</div>
+
 <div class="container-50">
 <table mat-table [dataSource]="filteredItemList" class="mat-elevation-z8">
     <ng-container matColumnDef="filePath">

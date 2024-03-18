@@ -1,0 +1,35 @@
+/* Container for items */
+.item-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    gap: 10px; /* Spacing between items */
+}
+
+/* Individual item styling */
+.item {
+    padding: 10px 15px; /* Adjust for padding around text */
+    background-color: #f8f9fa; /* Light gray, similar to list-group-item-action */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer; /* Hand cursor on hover */
+    flex: 0 1 auto; /* Flex grow, shrink and basis values */
+    text-align: center; /* Center text */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+/* Container adjustments */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center buttons and item container */
+}
+
+.item:hover {
+    background-color: #e2e6ea; /* Slightly darker on hover for feedback */
+}
+
+button {
+    margin-top: 20px; /* Space out buttons from the items */
+}
