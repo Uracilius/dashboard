@@ -10,6 +10,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
 @NgModule({
   imports: [
     MatButtonModule,
@@ -19,7 +20,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatSnackBarModule,
     MatPaginatorModule,
     FlexLayoutModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -32,7 +34,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatIconModule,
     MatPaginatorModule,
     FlexLayoutModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule {}

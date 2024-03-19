@@ -8,6 +8,7 @@ import { alertStatistics } from '../models/DTOs';
 })
 export class CodeAlertsApiService {
   path = 'http://localhost:3000/'
+  id='uracilius'
   //TODO MULTIPLE filePath should be changed to id upon migration to database 
   constructor(private http: HttpClient) { }
   getAlerts(page: number = 1, pageSize: number = 10, filePath: string): Observable<any> {
@@ -24,6 +25,10 @@ export class CodeAlertsApiService {
 
   getAlertStatistics(): Observable<alertStatistics> {
     return this.http.get<alertStatistics>(this.path+`alertStatistics`);
+  }
+
+  getLeetCodeData(): Observable<any> {
+    return this.http.get<any>(`${this.path}leetcode/${this.id}`);
   }
 
 }

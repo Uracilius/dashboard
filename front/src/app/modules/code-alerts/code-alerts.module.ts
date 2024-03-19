@@ -9,6 +9,7 @@ import { HighlightCodeDirective } from './directives/highlight-code.directive';
 import { FileListComponent } from './components/todos-table/components/file-list/file-list.component';
 import { FileSearchComponent } from './components/todos-table/components/file-search/file-search.component';
 import { CodeAlertsStatisticsComponent } from './components/code-alerts-statistics/code-alerts-statistics.component';
+import { LeetcodeStatisticsComponent } from '../leetcode/components/leetcode-statistics/leetcode-statistics.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CodeAlertsStatisticsComponent } from './components/code-alerts-statisti
     FileListComponent,
     FileSearchComponent,
     HighlightCodeDirective,
-    CodeAlertsStatisticsComponent
+    CodeAlertsStatisticsComponent,
+    LeetcodeStatisticsComponent
   ],
   imports: [
     CommonModule,

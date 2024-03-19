@@ -17,6 +17,9 @@ export class FileListComponent {
   fileList: string[] = [];
   fileNameFilter: string = '';
   selectedRowIndex: number | null = null;
+  numOfFiles=0;
+  isRenderNextButton = false;
+  isRenderPreviousButton = false;
   constructor(
     private communicationService: TableCommunicationService,
     private CodeAlertsApiService: CodeAlertsApiService,
@@ -43,7 +46,9 @@ export class FileListComponent {
         this.fileList = res.data; 
         this.pathNameGeneratorService.processPaths(res.data);
         this.fileDisplayList = this.pathNameGeneratorService.generateDynamicDisplayPaths(res.data);
-        this.rowClick(0); //Simulation of rowClick in case of singular files to make it look bearable 
+        this.calculateDisablePrevious();
+        this.calculateDisableNext();
+        this.rowClick(0);
       }
     }));
   }
@@ -54,7 +59,7 @@ export class FileListComponent {
   }
 
   previousPage() {
-    this.currentPage = Math.max(1, this.currentPage - 1);
+    this.currentPage--;
     this.populateList();
   }
 
@@ -65,6 +70,21 @@ export class FileListComponent {
         this.filterFileList();
       }
     }));
+
+    this.subs.push(this.communicationService.numOfFiles$.subscribe({
+      next: (res) => {
+        this.numOfFiles = res
+      }
+    }));
+  }
+
+  calculateDisableNext() {
+    const lastItemIndex = this.currentPage * this.pageSize;
+    this.isRenderNextButton = this.numOfFiles >= lastItemIndex;
+  }
+
+  calculateDisablePrevious(): void {
+    this.isRenderPreviousButton = this.currentPage !== 1;
   }
 
   filterFileList() {

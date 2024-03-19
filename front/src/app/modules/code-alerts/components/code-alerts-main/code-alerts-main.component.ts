@@ -6,4 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./code-alerts-main.component.css']
 })
 export class CodeAlertsMainComponent {
+    
 }

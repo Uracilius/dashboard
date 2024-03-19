@@ -5,6 +5,6 @@
          class="item">
         {{ file }}
     </div>
-    <i class="bi bi-caret-left-fill item" (click)="previousPage()"></i>
-    <i class="bi bi-caret-right-fill item" (click)="nextPage()"></i>
+    <i *ngIf="isRenderPreviousButton" class="bi bi-caret-left-fill item" (click)="previousPage()"></i>
+    <i *ngIf="isRenderNextButton" class="bi bi-caret-right-fill item" (click)="nextPage()"></i>
 </div>
