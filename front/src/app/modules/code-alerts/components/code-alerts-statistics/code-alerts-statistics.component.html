@@ -1,0 +1,21 @@
+<!-- code-alerts-statistics.component.html -->
+<div class="container-fluid">
+    <div class="row">
+      <!-- Total Number of Alerts -->
+      <div class="col-md-6 text-center">
+        <h1>Total Number of Alerts:</h1>
+        <div class="alert-count">
+          <h2>{{ getTotalAlerts() }}</h2>
+        </div>
+      </div>
+      
+      <!-- Across Number of Files -->
+      <div class="col-md-6 text-center">
+        <h1>Across Number of Files:</h1>
+        <div class="file-count">
+          <h2>{{ alertStatistics.numOfFiles }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  

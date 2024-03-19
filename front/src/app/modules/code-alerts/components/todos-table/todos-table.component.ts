@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
 import { Todo } from '../../models/todo'; 
 import { PaginationConstants } from 'src/app/modules/code-alerts/constants/pagination-constants';
-import { TableService } from 'src/app/modules/code-alerts/services/table.service';
+import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-alerts-api.service';
 
 @Component({
   selector: 'app-todos-table',
@@ -35,14 +35,14 @@ export class TodosTableComponent {
 
   constructor(
     private communicationService: TableCommunicationService,
-    private TableService: TableService
+    private CodeAlertsApiService: CodeAlertsApiService
   ) 
   {
     this.filteredItemList = [...this.SampleItemsList];
   }
 
   populateTable() {
-    this.subs.push(this.TableService.getComments(1, 5, this.selectedFile).subscribe({
+    this.subs.push(this.CodeAlertsApiService.getAlerts(1, 5, this.selectedFile).subscribe({
       next: (res: any) => {
         this.SampleItemsList = res.data;
         this.filteredItemList = res.data;
@@ -63,6 +63,7 @@ export class TodosTableComponent {
       next: (res) => {
         this.selectedFile = res
         this.populateTable();
+        this.selectedRowIndex = -1;
       }
     }));
   }

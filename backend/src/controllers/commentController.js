@@ -2,14 +2,14 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const CodeLineDTO = require("../dto/CodeLine");
 
-async function getCodeCommentsByFilePath(req, res) {
-  let results = []; 
-  const filePath = 'src/resources/report.csv'; 
-  
+const reportPath = 'src/resources/report.csv';
+
+async function getCodeAlertsByFilePath(req, res) {
+  let results = [];
   const page = parseInt(req.body.page, 10) || 1;
   const pageSize = parseInt(req.body.pageSize, 10) || 10;
   try {
-    fs.createReadStream(filePath)
+    fs.createReadStream(reportPath)
       .pipe(csvParser())
       .on('data', (row) => {
         if (row.FilePath == req.body.filePath) {
@@ -40,19 +40,17 @@ async function getCodeCommentsByFilePath(req, res) {
 }
 
 async function getCode(req, res) {
-    const filePath = 'src/resources/report.csv';
     const requestedFilePath = req.body.id;
 
     let found = false;
 
-    const stream = fs.createReadStream(filePath).pipe(csvParser());
+    const stream = fs.createReadStream(reportPath).pipe(csvParser());
 
     stream.on('data', (row) => {
         if (row.ID === requestedFilePath) {
             found = true;
-            // Wrap the text in a JSON object before sending
             res.json({ text: row.Code });
-            stream.destroy(); // Ensure to end the stream early
+            stream.destroy();
         }
     })
     .on('end', () => {
@@ -68,13 +66,12 @@ async function getCode(req, res) {
 
 async function getFileList(req, res){
   try {
-    const filePath = 'src/resources/report.csv'; // Ensure the file path and extension are correct
-    const resultsSet = new Set(); // To store unique filenames
+    const resultsSet = new Set();
 
     const page = parseInt(req.body.page, 10) || 1;
     const pageSize = parseInt(req.body.pageSize, 10) || 10;
 
-    fs.createReadStream(filePath)
+    fs.createReadStream(reportPath)
       .pipe(csvParser())
       .on('data', (row) => {
         resultsSet.add(row.FilePath); 
@@ -101,4 +98,41 @@ async function getFileList(req, res){
   }
 }
 
-module.exports = { getCodeCommentsByFilePath, getFileList, getCode };
+async function getAlertStatistics(req, res) {
+  const commentCounts = {};
+
+  fs.createReadStream(reportPath)
+    .pipe(csvParser())
+    .on('data', (row) => {
+      const status = row.Status;
+      if (!commentCounts[status]) {
+        commentCounts[status] = { count: 0, files: new Set() };
+      }
+      commentCounts[status].count += 1;
+      commentCounts[status].files.add(row.FilePath);
+    })
+    .on('end', () => {
+      const statusStatisticsList = Object.entries(commentCounts).map(([status, { count }]) => ({
+        status: status,
+        numOfAlerts: count,
+      }));
+
+      const totalUniqueFiles = new Set();
+      Object.values(commentCounts).forEach(({ files }) => {
+        files.forEach(file => totalUniqueFiles.add(file));
+      });
+
+      const alertStatistics = {
+        statusStatisticsList: statusStatisticsList,
+        numOfFiles: totalUniqueFiles.size,
+      };
+
+      res.json(alertStatistics);
+    })
+    .on('error', (error) => {
+      console.error('Error processing file:', error);
+      res.status(500).json({ error: 'Error processing file' });
+    });
+}
+
+module.exports = { getCodeAlertsByFilePath, getFileList, getCode, getAlertStatistics };

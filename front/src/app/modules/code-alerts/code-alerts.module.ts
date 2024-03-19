@@ -8,6 +8,7 @@ import { TodosTableComponent } from './components/todos-table/todos-table.compon
 import { HighlightCodeDirective } from './directives/highlight-code.directive';
 import { FileListComponent } from './components/todos-table/components/file-list/file-list.component';
 import { FileSearchComponent } from './components/todos-table/components/file-search/file-search.component';
+import { CodeAlertsStatisticsComponent } from './components/code-alerts-statistics/code-alerts-statistics.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { FileSearchComponent } from './components/todos-table/components/file-se
     FileListComponent,
     FileSearchComponent,
     HighlightCodeDirective,
+    CodeAlertsStatisticsComponent
   ],
   imports: [
     CommonModule,

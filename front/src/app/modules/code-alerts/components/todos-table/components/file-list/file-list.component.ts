@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PathNameGeneratorService } from 'src/app/modules/code-alerts/services/path-name-generator.service';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
-import { TableService } from 'src/app/modules/code-alerts/services/table.service';
+import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-alerts-api.service';
 
 @Component({
   selector: 'app-file-list',
@@ -19,7 +19,7 @@ export class FileListComponent {
   selectedRowIndex: number | null = null;
   constructor(
     private communicationService: TableCommunicationService,
-    private TableService: TableService,
+    private CodeAlertsApiService: CodeAlertsApiService,
     private pathNameGeneratorService: PathNameGeneratorService
   ) { }
 
@@ -38,7 +38,7 @@ export class FileListComponent {
   }
   //TODO: Check for better implementation instead of using rowClick to display first.
   populateList() {
-    this.subs.push(this.TableService.getFileList(this.currentPage, this.pageSize).subscribe({
+    this.subs.push(this.CodeAlertsApiService.getFileList(this.currentPage, this.pageSize).subscribe({
       next: (res) => {
         this.fileList = res.data; 
         this.pathNameGeneratorService.processPaths(res.data);
