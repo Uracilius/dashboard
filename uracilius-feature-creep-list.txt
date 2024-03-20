@@ -1,5 +1,5 @@
 *********FEATURE CREEP LIST BY ORDER OF IMPORTANCE:*********
-1. Main resume component refactor for angular modular approach
+1. Main resume component refactor for angular modular approach ****DONE
 2. Backend modularity refactor
 3. Backend caching of frequent requests
 4. leetcode last week progress stats for leetcode module

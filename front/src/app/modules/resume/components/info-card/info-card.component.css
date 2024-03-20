@@ -1,0 +1,17 @@
+.textblock{
+    background-color:#EFF4FB;
+    color:#091E34;
+    padding:5px;
+}
+
+.right{
+    text-align: end;
+}
+
+.left{
+    text-align: start;
+}
+
+h5{
+    margin:0 !important;
+}

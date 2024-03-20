@@ -4,8 +4,12 @@
 .selected {
     border-color: black; /* Adjust the color as needed */
     border-width: 2px;
+    border-left: 0px;
   }
   .mat-mdc-table .mat-mdc-row:hover, .mat-mdc-table .mat-mdc-footer-row:hover {
     background-color: rgba(0, 0, 0, 0.04) !important; /* Example: Light grey */
   }
-  
+  .background-white{
+    background-color:#EFF4FB;
+    color:#091E34;
+}

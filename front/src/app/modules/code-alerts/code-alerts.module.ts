@@ -10,7 +10,6 @@ import { FileListComponent } from './components/todos-table/components/file-list
 import { FileSearchComponent } from './components/todos-table/components/file-search/file-search.component';
 import { CodeAlertsStatisticsComponent } from './components/code-alerts-statistics/code-alerts-statistics.component';
 import { LeetcodeStatisticsComponent } from '../leetcode/components/leetcode-statistics/leetcode-statistics.component';
-import { ResumeMainComponent } from 'src/app/resume/components/resume-main/resume-main.component';
 
 
 @NgModule({
@@ -23,7 +22,6 @@ import { ResumeMainComponent } from 'src/app/resume/components/resume-main/resum
     HighlightCodeDirective,
     CodeAlertsStatisticsComponent,
     LeetcodeStatisticsComponent,
-    ResumeMainComponent
   ],
   imports: [
     CommonModule,

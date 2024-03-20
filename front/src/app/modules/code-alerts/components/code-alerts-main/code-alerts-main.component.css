@@ -2,9 +2,8 @@
     padding:2%
 }
 
-.background-white{
-    background-color:#EFF4FB;
-    color:#091E34 !important;
+.background-blue{
+    background-color:#0F3257;
 }
 
 #leftdash{
@@ -16,3 +15,4 @@
     background: linear-gradient(
             to left, #15467A, #0F3257);
 }
+
