@@ -10,9 +10,9 @@ import { UserFeedbackConstants } from '../../constants/user-feedback-constants';
   styleUrls: ['./code.component.css']
 })
 export class CodeComponent {
-  subs: Subscription[] = []
-  code: string = ''
-  defaultCodeMessage = UserFeedbackConstants.noCodeSelected
+  subs: Subscription[] = [];
+  code: string = '';
+  defaultCodeMessage = UserFeedbackConstants.noCodeSelected;
   constructor(
     private tableCommunicationService: TableCommunicationService,
     private CodeAlertsApiService: CodeAlertsApiService
@@ -26,7 +26,7 @@ export class CodeComponent {
   initSubscribe() {
     this.subs.push(
       this.tableCommunicationService.selectedComment$.pipe(
-      filter(comment => comment.trim() !== '') // Only emit non-empty comments
+      filter(comment => comment.trim() !== '') 
       ).subscribe({
         next: (res) => {
           this.getCode(res)

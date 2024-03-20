@@ -8,6 +8,8 @@
     flex-direction: column; /* Stack children vertically */
     height: 100%; /* Fill the height of its parent, ensure the parent has a defined height */
     justify-content: center;
+    margin:0px;
+    border-radius: 0px;
 }
 
 .align{

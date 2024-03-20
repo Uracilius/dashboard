@@ -1,0 +1,11 @@
+*********FEATURE CREEP LIST BY ORDER OF IMPORTANCE:*********
+1. Main resume component refactor for angular modular approach
+2. Backend modularity refactor
+3. Backend caching of frequent requests
+4. leetcode last week progress stats for leetcode module
+5. Spinner-loading integration for user feedback(high up cuz it's ugly rn)
+6. Search list of files by filename
+7. Consider refactoring using rxjs's TakeUntil instead of subs.push and unsubscribe
+8. Show my last solved problem and code from leetcode(database integration required)
+9. Ability to add 'suggestions' regarding the code i show in code.component
+10. Statistics such as history of file changes/comment changes to consider resolved etc. (Non-relative db? log-like structure?)
