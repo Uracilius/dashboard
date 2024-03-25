@@ -10,6 +10,7 @@ app.use(cors({ origin: 'http://localhost:4200' }));
 const { leetcode } = require('./src/api/leetcode');
 
 const { getFileList, getCodeAlertsByFilePath, getCode, getAlertStatistics } = require('./src/controllers/commentController');
+const handleErrors = require('./src/util/errorHandler');
 
 app.post('/alerts', getCodeAlertsByFilePath);
 app.post('/fileList', getFileList);
@@ -17,6 +18,8 @@ app.post('/code', getCode);
 app.get('/alertStatistics', getAlertStatistics);
 
 app.get('/leetcode/:id', leetcode);
+
+app.use(handleErrors)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
