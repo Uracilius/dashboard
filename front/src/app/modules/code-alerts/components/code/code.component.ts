@@ -15,7 +15,7 @@ export class CodeComponent {
   defaultCodeMessage = UserFeedbackConstants.noCodeSelected;
   constructor(
     private tableCommunicationService: TableCommunicationService,
-    private CodeAlertsApiService: CodeAlertsApiService
+    private codeAlertsApiService: CodeAlertsApiService
   ) 
   {}
 
@@ -25,9 +25,7 @@ export class CodeComponent {
 
   initSubscribe() {
     this.subs.push(
-      this.tableCommunicationService.selectedComment$.pipe(
-      filter(comment => comment.trim() !== '') 
-      ).subscribe({
+      this.tableCommunicationService.selectedComment$.subscribe({
         next: (res) => {
           this.getCode(res)
         }
@@ -36,12 +34,17 @@ export class CodeComponent {
   }
 
   getCode(filePath: string) {
-    this.subs.push(
-      this.CodeAlertsApiService.getCode(filePath).subscribe({
-        next: (res) => {
-          this.code=res.text.replace(/\\n/g, '\n');;
-        }
-      })
-    )
+      if(filePath !== '') {
+      this.subs.push(
+        this.codeAlertsApiService.getCode(filePath).subscribe({
+          next: (res) => {
+            this.code=res.text.replace(/\\n/g, '\n');;
+          }
+        })
+      )
+    }
+    else {
+      this.code = this.defaultCodeMessage;
+    }
   }
 }

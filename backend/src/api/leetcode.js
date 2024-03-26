@@ -43,7 +43,8 @@ const formatData = (data) => {
         totalQuestions: data.allQuestionsCount[0].count,
         ranking: data.matchedUser.profile.ranking,
         submissionCalendar: JSON.parse(data.matchedUser.submissionCalendar),
-        mostRecentSubmission: data.recentSubmissionList[0]
+        mostRecentSubmission: data.recentSubmissionList[0],
+        recentSubmissions: data.recentSubmissionList,
     }
     return sendData;
 }

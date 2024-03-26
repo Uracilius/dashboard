@@ -1,5 +1,5 @@
 <div class="code-container">
     <!--Do not add indentation or break up line 4. <pre> tag will put that inside of the code as well-->
-    <pre *ngIf="code===''" class="p-0 mx-2 flex-grow-1 code-container"><code [appHighlightCode]="defaultCodeMessage" class="language-javascript align">{{this.defaultCodeMessage}}</code></pre>
-    <pre *ngIf="code!==''" class="flex mx-2 p-0 flex-grow-1 code-container"><code [appHighlightCode]="code" class="language-javascript">{{this.code}}</code></pre>
+    <pre *ngIf="code===''" class="p-0 flex-grow-1 code-container"><code [appHighlightCode]="defaultCodeMessage" class="language-javascript align">{{this.defaultCodeMessage}}</code></pre>
+    <pre *ngIf="code!==''" class="flex p-0 flex-grow-1 code-container"><code [appHighlightCode]="code" class="language-javascript">{{this.code}}</code></pre>
 </div>

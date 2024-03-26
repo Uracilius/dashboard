@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
-import { Todo } from '../../models/todo'; 
 import { PaginationConstants } from 'src/app/modules/code-alerts/constants/pagination-constants';
 import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-alerts-api.service';
+import { AlertDTO } from '../../models/DTOs';
 
 @Component({
   selector: 'app-todos-table',
@@ -11,13 +11,13 @@ import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-
   styleUrls: ['./todos-table.component.css']
 })
 export class TodosTableComponent {
-  SampleItemsList: Todo[] = [];
-  filteredItemList: Todo[] = [];
+  SampleItemsList: AlertDTO[] = [];
+  filteredItemList: AlertDTO[] = [];
   subs: Subscription[] = [];
   pageSize= PaginationConstants.pageSize;
   displayedColumns: string[] = ['filePath', 'status', 'meta'];
   selectedFile = '';
-  selectedRowIndex: number = -1; // Initial value indicating no row is selected
+  selectedRowIndex: number = -1;
 
   
   onRowClicked(row: any,  index: number) {
@@ -61,7 +61,8 @@ export class TodosTableComponent {
   initSubscribe() {
     this.subs.push(this.communicationService.selectedFileList$.subscribe({
       next: (res) => {
-        this.selectedFile = res
+        this.selectedFile = res;
+        this.selectedComment='';
         this.populateTable();
         this.selectedRowIndex = -1;
       }
