@@ -48,7 +48,7 @@ const formatData = (data) => {
     mostRecentSubmission: data.recentSubmissionList[0],
     recentSubmissions: data.recentSubmissionList,
   };
-  submissionCalendarCache=data.submissionCalendar;
+  submissionCalendarCache=JSON.parse(data.matchedUser.submissionCalendar);
   return sendData;
 };
 
@@ -88,41 +88,70 @@ const fetchLeetCodeData = async (req, res) => {
 };
 const dom = new JSDOM('<!DOCTYPE html><body><div id="cal-heatmap"></div></body>');
 global.document = dom.window.document;
-const generateHeatmapSVG = async (submissionCalendar) => {
-  const { default: CalHeatmap } = await import('cal-heatmap');
 
-  const options = {
-    itemSelector: '#cal-heatmap', // Selector within our jsdom instance
-    range: 12, // Example range
-    domain: { type: 'month', size: 12 }, // Simplified domain options
-    subDomain: { type: 'day' }, // Simplified sub-domain options
-    verticalOrientation: false,
-    data: Object.entries(submissionCalendar).reduce((acc, [timestamp, count]) => {
-      // Convert timestamps to milliseconds and prepare data
-      timestamp = count;
-      return acc;
-    }, {}),
-    label: true, // Assuming you want labels
-    animationDuration: 500,
-    scale: [1, 2, 3, 4], // Example scale options
-    theme: 'light',
-    // Add other necessary options
-  };
+async function generateHeatmapSVG(submissionCalendar) {
+  console.log("Starting dynamic import of cal-heatmap...");
+  
+  // Dynamically import cal-heatmap
+  const CalHeatmap = (await import('cal-heatmap')).default;
+  console.log("CalHeatmap imported successfully.");
 
-  // Initialize CalHeatmap
   const cal = new CalHeatmap();
 
-  try {
-    // Use the initialized options to paint the heatmap
-    await cal.paint(options);
+  console.log("Preparing data for heatmap...");
+  console.log("Initial submissionCalendar data:", submissionCalendar);
 
-    // Return the heatmap's HTML content
-    return document.querySelector('#cal-heatmap').outerHTML;
-  } catch (error) {
-    console.error('Failed to render heatmap:', error);
-    throw error; // Rethrow or handle as needed
+  // Prepare your data
+  const preparedData = Object.entries(submissionCalendar).reduce((acc, [timestamp, value], index) => {
+      // Convert timestamp to seconds and map to cal-heatmap's expected data format
+      const timeInSeconds = Math.floor(Number(timestamp) / 1000);
+      acc[timeInSeconds] = value;
+
+      if (index < 5) { // Log the first few conversions to avoid cluttering the console
+          console.log(`Mapping timestamp ${timestamp} with value ${value} to seconds: ${timeInSeconds}`);
+      }
+
+      return acc;
+  }, {});
+
+  if (Object.keys(preparedData).length === 0) {
+      console.warn("Prepared data is empty. Check the input submissionCalendar format and values.");
+  } else {
+      console.log("Prepared data for heatmap:", preparedData);
   }
-};
+
+  // Options configuration for cal-heatmap
+  const options = {
+      itemSelector: '#cal-heatmap',
+      range: 6,
+      domain: { type: 'month', size: 6 },
+      subDomain: { type: 'day', radius: 2 },
+      verticalOrientation: false,
+      data: preparedData,
+      label: true,
+      animationDuration: 500,
+      scale: [1, 2, 3, 4],
+      theme: 'light',
+  };
+
+  console.log("Options for cal-heatmap:", options);
+
+  try {
+      console.log("Attempting to paint the heatmap...");
+      await cal.paint(options);
+      console.log("Heatmap painted successfully.");
+
+      const heatmapHTML = document.querySelector('#cal-heatmap').outerHTML;
+      console.log("Generated heatmap HTML:", heatmapHTML.substring(0, 100)); // Log a snippet of the HTML to avoid overload
+      return heatmapHTML;
+  } catch (error) {
+      console.error('Failed to render heatmap:', error);
+      throw error; // Rethrow or handle as needed
+  }
+}
+
+
+
 
 
 const getHeatmapSVG = async (req, res) => {
@@ -154,3 +183,4 @@ const getHeatmapSVG = async (req, res) => {
 };
 
 module.exports = {fetchLeetCodeData, getHeatmapSVG};
+
