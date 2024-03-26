@@ -15,6 +15,9 @@ export class LeetCodeApiService {
   getLeetCodeData(): Observable<any> {
     return this.http.get<any>(`${this.path}leetcode/${this.id}`);
   }
+  getLeetCodeCalendar(): Observable<any> {
+    return this.http.get<any>(`${this.path}leetcode/calendar/${this.id}`);
+  }
 
 }
  
