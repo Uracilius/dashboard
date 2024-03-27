@@ -6,11 +6,15 @@ a{
     color: #EFF4FB;
 }
 
-#leftdash{
-    background: linear-gradient(
-            to right, #15467A, #0F3257);
-}
-#rightdash{
-    background: linear-gradient(
-            to left, #15467A, #0F3257);
+.loading-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 5;
+    justify-content: center;
+    align-items: center; 
 }
