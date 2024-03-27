@@ -2,7 +2,7 @@
 1. Main resume component refactor for angular modular approach ****DONE
 2. Backend modularity refactor ******DONE
 3. Backend caching of frequent requests *****DONE
-4. leetcode last week progress stats for leetcode module
+4. leetcode last week progress stats for leetcode module *****DONE
 5. Spinner-loading integration for user feedback(high up cuz it's ugly rn)
 6. Search list of files by filename
 7. Consider refactoring using rxjs's TakeUntil instead of subs.push and unsubscribe

@@ -15,6 +15,6 @@ export interface LeetcodeData{
 }
 
 export interface TimeStampSubmission{
-    timestamp: number,
+    timestamp: Date,
     submissionCount: number
 }
