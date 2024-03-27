@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors({ origin: 'http://localhost:4200' }));
 
-const { fetchLeetCodeData, getHeatmapSVG } = require('./src/api/leetcode');
+const { fetchLeetCodeData } = require('./src/api/leetcode');
 
 const { getFileList, getCodeAlertsByFilePath, getCode, getAlertStatistics } = require('./src/controllers/commentController');
 const handleErrors = require('./src/util/errorHandler');
@@ -18,7 +18,6 @@ app.post('/code', getCode);
 app.get('/alertStatistics', getAlertStatistics);
 
 app.get('/leetcode/:id', fetchLeetCodeData);
-app.get('/leetcode/calendar/:id', getHeatmapSVG);
 app.use(handleErrors)
 
 app.listen(port, () => {
