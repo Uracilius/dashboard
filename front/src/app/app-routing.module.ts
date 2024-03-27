@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/code-alerts',
+    redirectTo: '/resume',
     pathMatch: 'full'
   },
   {
@@ -14,6 +14,11 @@ const routes: Routes = [
     path: 'resume',
     loadChildren: () => import('./modules/resume/resume.module').then(m => m.ResumeModule)
   },
+  {
+    path: 'leetcode',
+    loadChildren: () => import('./modules/leetcode/leetcode.module').then(m => m.LeetcodeModule)
+  },
+
 ]
 
 @NgModule({
