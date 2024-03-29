@@ -2,6 +2,7 @@ const CodeLineDTO = require("../dto/CodeLine");
 const CSVReader = require('../services/csvReader');
 const { default: Constants } = require('../../environment');
 const { setCache, getCache } = require('../cache/cacheUtil');
+const Fuse = require('fuse.js');
 
 async function getCodeAlertsByFilePath(req, res, next) {
   const page = parseInt(req.body.page, 10) || Constants.DEFAULT_PAGE;
@@ -30,7 +31,6 @@ async function getCodeAlertsByFilePath(req, res, next) {
     res.json({
       page,
       pageSize,
-      totalCount: paginatedResults.length,
       data: paginatedResults,
     });
   } catch (error) {
@@ -61,19 +61,26 @@ async function getCode(req, res, next) {
   }
 }
 
-
-async function getFileList(req, res, next) {
+async function getFileListWithFilter(req, res, next) {
   const page = parseInt(req.body.page, 10) || Constants.DEFAULT_PAGE;
+  const fileNameFilter = req.body.fileNameFilter || '';
   const pageSize = parseInt(req.body.pageSize, 10) || Constants.DEFAULT_PAGE_SIZE;
-  const cacheKey = `fileList:${page}:${pageSize}`;
-
+  const cacheKey = `fileList:${page}:${fileNameFilter}:${pageSize}`;
   try {
     let paginatedFilePaths = await getCache(cacheKey);
     if (!paginatedFilePaths) {
-      const uniqueFilePaths = await CSVReader.getUniqueFilePaths();
+      let uniqueFilePaths = await CSVReader.getUniqueFilePaths();
+
+      let filteredFilePaths = uniqueFilePaths;
+      if (fileNameFilter) {
+        const fuse = new Fuse(uniqueFilePaths, { keys: ['filePath'] });
+        const searchResults = fuse.search(fileNameFilter);
+        filteredFilePaths = searchResults.map(result => result.item);
+      }
+
       const startIndex = (page - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-      paginatedFilePaths = uniqueFilePaths.slice(startIndex, endIndex);
+      paginatedFilePaths = filteredFilePaths.slice(startIndex, endIndex);
 
       await setCache(cacheKey, paginatedFilePaths);
     }
@@ -81,11 +88,10 @@ async function getFileList(req, res, next) {
     res.json({
       currentPage: page,
       pageSize: pageSize,
-      totalCount: paginatedFilePaths.length,
-      totalPages: Math.ceil(paginatedFilePaths.length / pageSize),
       data: paginatedFilePaths,
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 }
@@ -107,4 +113,4 @@ async function getAlertStatistics(req, res, next) {
 }
 
 
-module.exports = { getCodeAlertsByFilePath, getFileList, getCode, getAlertStatistics };
+module.exports = { getCodeAlertsByFilePath, getCode, getAlertStatistics, getFileListWithFilter};

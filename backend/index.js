@@ -9,11 +9,11 @@ app.use(cors({ origin: 'http://localhost:4200' }));
 
 const { fetchLeetCodeData } = require('./src/api/leetcode');
 
-const { getFileList, getCodeAlertsByFilePath, getCode, getAlertStatistics } = require('./src/controllers/commentController');
+const { getCodeAlertsByFilePath, getCode, getAlertStatistics, getFileListWithFilter } = require('./src/controllers/commentController');
 const handleErrors = require('./src/util/errorHandler');
 
 app.post('/alerts', getCodeAlertsByFilePath);
-app.post('/fileList', getFileList);
+app.post('/fileList', getFileListWithFilter);
 app.post('/code', getCode);
 app.get('/alertStatistics', getAlertStatistics);
 

@@ -4,9 +4,10 @@
 3. Backend caching of frequent requests *****DONE
 4. leetcode last week progress stats for leetcode module *****DONE
 5. Spinner-loading integration for user feedback(high up cuz it's ugly rn) *****DONE
-6. Search list of files by filename
+6. Search list of files by filename ****DONE
 7. Consider refactoring using rxjs's TakeUntil instead of subs.push and unsubscribe
 8. Show my last solved problem and code from leetcode(database integration required) & Backend refactor to spring-boot
 9. ERROR INTERCEPTOR FRONTEND. ERROR HANDLING BACKEND
-10. Ability to add 'suggestions' regarding the code i show in code.component
-11. Statistics such as history of file changes/comment changes to consider resolved etc. (Non-relative db? log-like structure?)
+10. Hover above leetcode calendar to show how many submits I've made
+11. Ability to add 'suggestions' regarding the code i show in code.component
+12. Statistics such as history of file changes/comment changes to consider resolved etc. (Non-relative db? log-like structure?)
