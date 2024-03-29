@@ -29,6 +29,9 @@ export class CodeAlertsStatisticsComponent {
   }
 
   getTotalAlerts(): number {
+    if (this.alertStatistics.statusStatisticsList === undefined) {
+      return 0;
+    }
     return this.alertStatistics.statusStatisticsList.reduce((total, statusStat) => total + statusStat.numOfAlerts, 0);
   }
 

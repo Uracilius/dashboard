@@ -10,7 +10,7 @@ import { LeetcodeCommunicationService } from '../../services/leetcode-communicat
   styleUrls: ['./leetcode-calendar.component.css']
 })
 export class LeetcodeCalendarComponent {
-  calendar: any; // Type as any if CalHeatMap is not recognized
+  calendar: any;
   calendarData: TimeStampSubmission[] = [];
   subs: Subscription[] = [];
 
@@ -42,10 +42,6 @@ export class LeetcodeCalendarComponent {
   }
 
   paintCalendar() {
-    // Ensure data is available
-    
-    
-    // Initialize heatmap
     this.calendar = new CalHeatmap();
     const container = document.querySelector('#cal-heatmap'); // Ensure this element exists in your template
     if (!container) {

@@ -15,8 +15,8 @@ export class CodeAlertsApiService {
     return this.http.post<AlertDTO>(this.path+`alerts`, { page, pageSize, filePath });
   }
   
-  getFileList(page: number, pageSize: number = 10): Observable<any> { // Adjust the return type based on your actual data structure
-    return this.http.post<any>(this.path+`fileList`, { page, pageSize });
+  getFileList(page: number, pageSize: number = 10, fileNameFilter: string): Observable<any> { // Adjust the return type based on your actual data structure
+    return this.http.post<any>(this.path+`fileList`, { page, pageSize, fileNameFilter });
   }
   //TODO filePath should be changed to id upon migration to database 
   getCode(id: string): Observable<any> { 

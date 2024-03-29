@@ -9,6 +9,7 @@ import { HighlightCodeDirective } from './directives/highlight-code.directive';
 import { FileListComponent } from './components/todos-table/components/file-list/file-list.component';
 import { FileSearchComponent } from './components/todos-table/components/file-search/file-search.component';
 import { CodeAlertsStatisticsComponent } from './components/code-alerts-statistics/code-alerts-statistics.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { CodeAlertsStatisticsComponent } from './components/code-alerts-statisti
     CommonModule,
     CodeAlertsRoutingModule,
     MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [
   ],

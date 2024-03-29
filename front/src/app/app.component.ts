@@ -27,7 +27,7 @@ export class AppComponent {
   }
 
   subscribeLoading() {
-    this.loadingService.loading$.subscribe({
+    this.loadingService.loading$.pipe(delay(0)).subscribe({
       next: (isLoading) => {
         if (isLoading) {
           this.showSpinner = true;

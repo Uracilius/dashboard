@@ -22,7 +22,7 @@ import { LoadingService } from './services/loading-service';
     HttpClientModule
   ],
   providers: [
-    LoadingService, // Ensure your LoadingService is provided if it's not already
+    LoadingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,

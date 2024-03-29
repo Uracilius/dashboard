@@ -18,7 +18,6 @@ export class TodosTableComponent {
   displayedColumns: string[] = ['filePath', 'status', 'meta'];
   selectedFile = '';
   selectedRowIndex: number = -1;
-
   
   onRowClicked(row: any,  index: number) {
     this.selectedRowIndex = index;
@@ -67,6 +66,7 @@ export class TodosTableComponent {
         this.selectedRowIndex = -1;
       }
     }));
+    
   }
 
   onPageChange(event: any) {

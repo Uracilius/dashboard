@@ -1,1 +1,14 @@
-<p>file-search works!</p>
+
+<mat-form-field subscriptSizing="dynamic">
+    <input 
+    [formControl]="fileNameFilter" 
+    matInput
+    type="text"
+    (keyup.enter)="onSubmit()">
+    <button 
+        (click)="onSubmit()"
+        matSuffix
+        mat-button>
+        <mat-icon >search</mat-icon>
+    </button>
+</mat-form-field>

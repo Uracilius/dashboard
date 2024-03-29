@@ -41,7 +41,6 @@ export class LeetcodeStatisticsComponent implements OnInit {
       timestamp: new Date(parseInt(timestamp, 10) * 1000),
       submissionCount: submissionCount as unknown as number
     }));
-    
     return submissions;
 }
 }

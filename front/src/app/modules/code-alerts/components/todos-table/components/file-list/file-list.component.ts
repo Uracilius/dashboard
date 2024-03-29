@@ -41,7 +41,7 @@ export class FileListComponent {
   }
   //TODO: Check for better implementation instead of using rowClick to display first.
   populateList() {
-    this.subs.push(this.CodeAlertsApiService.getFileList(this.currentPage, this.pageSize).subscribe({
+    this.subs.push(this.CodeAlertsApiService.getFileList(this.currentPage, this.pageSize, this.fileNameFilter).subscribe({
       next: (res) => {
         this.fileList = res.data; 
         this.pathNameGeneratorService.processPaths(res.data);
@@ -66,8 +66,8 @@ export class FileListComponent {
   initSubscribe() {
     this.subs.push(this.communicationService.fileNameFilter$.subscribe({
       next: (res) => {
-        this.fileNameFilter = res
-        this.filterFileList();
+        this.fileNameFilter = res;
+        this.populateList();
       }
     }));
 
@@ -85,11 +85,5 @@ export class FileListComponent {
 
   calculateDisablePrevious(): void {
     this.isRenderPreviousButton = this.currentPage !== 1;
-  }
-
-  filterFileList() {
-    if (this.fileNameFilter) {
-      this.fileList = this.fileList.filter(file => file.includes(this.fileNameFilter));
-    }
   }
 }
