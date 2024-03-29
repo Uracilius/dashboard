@@ -13,10 +13,11 @@ export class LeetcodeStatisticsComponent implements OnInit {
   leetcodeData: LeetcodeData = {} as LeetcodeData;
   subs: Subscription[] = [];
   username: string = 'uracilius';
+  
   constructor(
     private apiService: LeetCodeApiService,
     private communicationService: LeetcodeCommunicationService
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.getLeetCodeData();
@@ -42,5 +43,5 @@ export class LeetcodeStatisticsComponent implements OnInit {
       submissionCount: submissionCount as unknown as number
     }));
     return submissions;
-}
+  }
 }
