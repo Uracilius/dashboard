@@ -7,13 +7,21 @@ import lombok.Setter;
 @Setter
 public class CodeLineDTO {
 	
-	private int Id;
+	private String Id;
 
 	private String filePath;
 	
 	private String status;
 	
 	private String meta;
+
+	public CodeLineDTO(String id, String filePath, String status, String meta) {
+		super();
+		Id = id;
+		this.filePath = filePath;
+		this.status = status;
+		this.meta = meta;
+	}
 	
 	
 }

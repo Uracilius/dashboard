@@ -1,4 +1,8 @@
 package com.uracilius.service;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import com.uracilius.DTO.CodeDTO;
 import com.uracilius.DTO.CodeLineDTO;
 import com.uracilius.DTO.FileFilterRequest;
@@ -9,9 +13,9 @@ public interface CodeAlertsService {
 	
 	FilesDTO getFilesByFilter(FileFilterRequest fileFilterRequest);
 
-	CodeLineDTO getCodeAlertsByFilePath(int page, int pageSize, String filePath);
+	List<CodeLineDTO> getCodeAlertsByFilePath(int page, int pageSize, String filePath);
 	
-	CodeDTO getCode(String filePath);
+	CodeDTO getCodeById(String Id);
 	
 	alertStatsDTO getAlertStats();
 	

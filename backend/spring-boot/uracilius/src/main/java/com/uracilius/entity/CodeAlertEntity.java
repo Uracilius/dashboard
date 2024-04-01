@@ -27,4 +27,8 @@ public class CodeAlertEntity {
 	@Column(name="meta")
     private String meta;
 	
+	
+	public String getCode(){
+		return this.code;
+	}
 }

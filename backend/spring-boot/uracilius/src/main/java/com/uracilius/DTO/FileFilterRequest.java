@@ -9,4 +9,6 @@ public class FileFilterRequest {
 	private int page;
     private int pageSize;
     private String fileNameFilter;
+    private String filePath;
+    private String id;
 }

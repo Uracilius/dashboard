@@ -26,7 +26,7 @@
 </div>
 <div class="container-50">
   <mat-paginator 
-    [length]="filteredItemList.length"
+    [length]="filteredItemList?.length"
     [pageSize]="pageSize"
     (page)="onPageChange($event)">
   </mat-paginator>

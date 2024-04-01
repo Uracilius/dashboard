@@ -38,7 +38,7 @@ export class CodeComponent {
       this.subs.push(
         this.codeAlertsApiService.getCode(filePath).subscribe({
           next: (res) => {
-            this.code=res.text.replace(/\\n/g, '\n');;
+            this.code=res.code.replace(/\\n/g, '\n');;
           }
         })
       )

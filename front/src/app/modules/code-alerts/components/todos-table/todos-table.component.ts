@@ -41,10 +41,10 @@ export class TodosTableComponent {
   }
 
   populateTable() {
-    this.subs.push(this.CodeAlertsApiService.getAlerts(1, 5, this.selectedFile).subscribe({
+    this.subs.push(this.CodeAlertsApiService.getAlerts(0, 5, this.selectedFile).subscribe({
       next: (res: any) => {
-        this.SampleItemsList = res.data;
-        this.filteredItemList = res.data;
+        this.SampleItemsList = res;
+        this.filteredItemList = res;
       }
     }));
   }

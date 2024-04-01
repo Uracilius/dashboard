@@ -36,7 +36,7 @@ public class CodeAlertsServiceImpl implements CodeAlertsService{
 	    if (fileFilterRequest.getFileNameFilter() == null || fileFilterRequest.getFileNameFilter().isEmpty()) {
 	        pageResult = codeAlertRepository.findAll(pageRequest);
 	    } else {
-	        pageResult = codeAlertRepository.findByFilePathContaining(fileFilterRequest.getFileNameFilter(), pageRequest);
+	        pageResult = codeAlertRepository.searchByFilePathContaining(fileFilterRequest.getFileNameFilter(), pageRequest);
 	    }
 
 	    List<FileDTO> fileDTOList = pageResult.getContent().stream()
@@ -56,20 +56,23 @@ public class CodeAlertsServiceImpl implements CodeAlertsService{
 	}
 
 	@Override
-	public CodeLineDTO getCodeAlertsByFilePath(int page, int pageSize, String filePath) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CodeLineDTO> getCodeAlertsByFilePath(int page, int pageSize, String filePath) {
+		System.out.println(filePath);
+	    PageRequest pageRequest = PageRequest.of(page, pageSize);
+
+	    return codeAlertRepository.findByFilePath(filePath, pageRequest).getContent();
 	}
 	
-	public CodeDTO getCode(String filePath) {
-		CodeAlertEntity queryResult = codeAlertRepository.findByFilePath(filePath);
-	
-		if (!queryResult.equals(null)) {
-			CodeDTO codeDTO = new CodeDTO(queryResult.getCode());
-			return codeDTO;
-        }
-		return null;
+	@Override
+	public CodeDTO getCodeById(String Id) {
+	    CodeDTO queryResult = codeAlertRepository.getCodeById(Id);
+	    if (queryResult != null) {
+	        return queryResult;
+	    } else {
+	        return null;
+	    }
 	}
+
 
 	@Override
 	public alertStatsDTO getAlertStats() {
