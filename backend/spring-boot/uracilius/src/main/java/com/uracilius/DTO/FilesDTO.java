@@ -1,5 +1,7 @@
 package com.uracilius.DTO;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,8 @@ import lombok.Setter;
 @Setter
 public class FilesDTO {
 
-	private String filePath;
-	
-	private int page;
-	
-	private int pageSize;
+	private List<FileDTO> files;
+    private int page;
+    private int pageSize;
+
 }

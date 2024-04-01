@@ -22,4 +22,15 @@ export class AlertDTO {
     this.text = text;
     this.meta = meta;
   }
+
+}
+
+export interface FileNameDTO {
+  filePath: string;
+}
+
+export interface FilteredFileNames{
+  files: FileNameDTO[];
+  page: number;
+  pageSize: number;
 }

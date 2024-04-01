@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { PathNameGeneratorService } from 'src/app/modules/code-alerts/services/path-name-generator.service';
 import { TableCommunicationService } from 'src/app/modules/code-alerts/services/table-communication.service';
 import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-alerts-api.service';
+import { FilteredFileNames } from 'src/app/modules/code-alerts/models/DTOs';
 
 @Component({
   selector: 'app-file-list',
@@ -10,11 +11,15 @@ import { CodeAlertsApiService } from 'src/app/modules/code-alerts/services/code-
   styleUrls: ['./file-list.component.css']
 })
 export class FileListComponent {
-  currentPage: number = 1;
+  currentPage: number = 0;
   pageSize: number = 5;
   subs: Subscription[] = [];
   fileDisplayList: string [] = [];
-  fileList: string[] = [];
+  filteredFileList: FilteredFileNames = {
+    files: [],
+    page: 0,
+    pageSize: 5
+  };
   fileNameFilter: string = '';
   selectedRowIndex: number | null = null;
   numOfFiles=0;
@@ -37,15 +42,15 @@ export class FileListComponent {
 
   rowClick(index: number){
     this.selectedRowIndex = index;
-    this.communicationService.selectedFileList$.next(this.fileList[index]);
+    this.communicationService.selectedFileList$.next(this.filteredFileList.files[index].filePath);
   }
   //TODO: Check for better implementation instead of using rowClick to display first.
   populateList() {
     this.subs.push(this.CodeAlertsApiService.getFileList(this.currentPage, this.pageSize, this.fileNameFilter).subscribe({
       next: (res) => {
-        this.fileList = res.data; 
-        this.pathNameGeneratorService.processPaths(res.data);
-        this.fileDisplayList = this.pathNameGeneratorService.generateDynamicDisplayPaths(res.data);
+        this.filteredFileList = res; 
+        this.pathNameGeneratorService.processPaths(this.filteredFileList.files);
+        this.fileDisplayList = this.pathNameGeneratorService.generateDynamicDisplayPaths(this.filteredFileList.files);
         this.calculateDisablePrevious();
         this.calculateDisableNext();
         this.rowClick(0);
@@ -84,6 +89,6 @@ export class FileListComponent {
   }
 
   calculateDisablePrevious(): void {
-    this.isRenderPreviousButton = this.currentPage !== 1;
+    this.isRenderPreviousButton = this.currentPage !== 0;
   }
 }

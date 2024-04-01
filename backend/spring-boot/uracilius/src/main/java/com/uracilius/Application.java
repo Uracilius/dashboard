@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.uracilius.constants.ENV_CONSTANTS;
+
 
 @SpringBootApplication
 public class Application {
