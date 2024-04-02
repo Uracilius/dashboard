@@ -1,0 +1,32 @@
+.item-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.item {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    flex: 0 1 auto;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item:hover {
+    background-color: #e2e6ea;
+}
+
+.selected-item {
+    border: 2px solid black;
+}

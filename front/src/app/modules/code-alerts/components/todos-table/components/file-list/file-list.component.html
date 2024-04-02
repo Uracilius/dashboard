@@ -1,0 +1,20 @@
+<div class="my-4 item-container">
+    <div  
+        *ngFor="let file of fileDisplayList; let i = index;"
+        matRipple
+        (click)="rowClick(i)" 
+        [ngClass]="{'selected-item': selectedRowIndex === i}" 
+        class="item">
+        {{ file }}
+    </div>
+    <i 
+        *ngIf="isRenderPreviousButton"
+        (click)="previousPage()"
+        class="bi bi-caret-left-fill item">
+    </i>
+    <i 
+        *ngIf="isRenderNextButton"
+        (click)="nextPage()"
+        class="bi bi-caret-right-fill item">
+    </i>
+</div>

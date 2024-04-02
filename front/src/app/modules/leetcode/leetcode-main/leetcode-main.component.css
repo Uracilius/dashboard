@@ -1,0 +1,22 @@
+.col-md-6{
+    padding:2%
+}
+
+.background-blue{
+    background-color:#0F3257;
+}
+
+#leftdash{
+    background: linear-gradient(
+            to right, #15467A, #0F3257);
+}
+
+#rightdash{
+    background: linear-gradient(
+            to left, #15467A, #0F3257);
+}
+
+.background-white{
+    background-color:#EFF4FB;
+    color:#091E34;
+}

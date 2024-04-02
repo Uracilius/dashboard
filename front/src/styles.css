@@ -1,0 +1,10 @@
+html, body { height: 100%; }
+
+@font-face {
+    font-family: 'Glober Semi Bold Free';
+    src: url('./assets/fonts/globersemiboldfree.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Glober Semi Bold Free', sans-serif;
+}

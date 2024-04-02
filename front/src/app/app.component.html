@@ -1,0 +1,26 @@
+<div *ngIf="showSpinner" [@fadeOut]="loading ? 'visible' : 'invisible'" (@fadeOut.done)="animationDone()" class="loading-container flex-content-center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      [diameter]="100">
+    </mat-progress-spinner>
+  </div>
+  
+<nav class="navbar navbar-color navbar-expand-lg">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/resume">Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/code-alerts">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/leetcode">Leetcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>

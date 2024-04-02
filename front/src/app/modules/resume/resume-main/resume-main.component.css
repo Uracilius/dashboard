@@ -1,0 +1,16 @@
+#leftdash{
+    background: linear-gradient(
+            to right, #15467A, #0F3257);
+}
+#rightdash{
+    background: linear-gradient(
+            to left, #15467A, #0F3257);
+}
+
+#div_main_dashboard{
+    background-color:#0F3257;
+}
+
+.text-highlight{
+    color: #FFBC42;
+}
