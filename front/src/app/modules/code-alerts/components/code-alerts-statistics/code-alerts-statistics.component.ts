@@ -8,7 +8,7 @@ import { TableCommunicationService } from '../../services/table-communication.se
   styleUrls: ['./code-alerts-statistics.component.css']
 })
 export class CodeAlertsStatisticsComponent {
-  alertStatistics: alertStatistics = {numOfFiles: 0,statusStatisticsList: []};
+  alertStatistics: alertStatistics = {numOfAlerts: 0};
   constructor(
     private CodeAlertsApiService: CodeAlertsApiService,
     private communicationService: TableCommunicationService
@@ -28,14 +28,7 @@ export class CodeAlertsStatisticsComponent {
     });
   }
 
-  getTotalAlerts(): number {
-    if (this.alertStatistics.statusStatisticsList === undefined) {
-      return 0;
-    }
-    return this.alertStatistics.statusStatisticsList.reduce((total, statusStat) => total + statusStat.numOfAlerts, 0);
-  }
-
   setNumOfFiles$(){
-    this.communicationService.numOfFiles$.next(this.alertStatistics.numOfFiles);
+    this.communicationService.numOfFiles$.next(this.alertStatistics.numOfAlerts);
   }
 }

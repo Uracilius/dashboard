@@ -16,5 +16,7 @@ public interface CodeAlertsRepository extends PagingAndSortingRepository<CodeAle
 	CodeDTO getCodeById(String Id);
 	
 	Page<CodeLineDTO> findByFilePath(@Param("filePath") String filePath, Pageable pageable);
+
+	int count();
 	
 }

@@ -25,7 +25,7 @@ export class CodeAlertsApiService {
   }
 
   getAlertStatistics(): Observable<alertStatistics> {
-    return this.http.get<alertStatistics>(this.path+`alertStatistics`);
+    return this.http.get<alertStatistics>('http://localhost:8080/getAlertStats');
   }
 }
  

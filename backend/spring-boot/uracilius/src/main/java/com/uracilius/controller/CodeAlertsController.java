@@ -2,6 +2,7 @@ package com.uracilius.controller;
 
 import java.util.List;
 
+import com.uracilius.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uracilius.DTO.CodeDTO;
-import com.uracilius.DTO.CodeLineDTO;
-import com.uracilius.DTO.FileFilterRequest;
-import com.uracilius.DTO.FilesDTO;
 import com.uracilius.service.CodeAlertsService;
 
 @CrossOrigin
@@ -37,6 +34,11 @@ public class CodeAlertsController {
 	@PostMapping("/getCode")
 	public CodeDTO getCode(@RequestBody FileFilterRequest request) {
 	    return codeAlertsService.getCodeById(request.getId());
+	}
+
+	@GetMapping("/getAlertStats")
+	public alertStatsDTO getAlertStats() {
+		return codeAlertsService.getAlertStats();
 	}
 
 }

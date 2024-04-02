@@ -76,8 +76,10 @@ public class CodeAlertsServiceImpl implements CodeAlertsService{
 
 	@Override
 	public alertStatsDTO getAlertStats() {
-		// TODO Auto-generated method stub
-		return null;
+		alertStatsDTO alertStats = new alertStatsDTO();
+
+		alertStats.setNumOfAlerts(codeAlertRepository.count());
+		return alertStats;
 	}
 	
 }

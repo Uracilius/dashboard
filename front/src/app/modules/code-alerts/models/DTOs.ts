@@ -4,8 +4,7 @@ export interface statusStatistics {
   }
 
 export interface alertStatistics {
-    statusStatisticsList: statusStatistics[];
-    numOfFiles: number;
+    numOfAlerts: number;
   }
 
 export class AlertDTO {
